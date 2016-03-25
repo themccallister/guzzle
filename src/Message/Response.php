@@ -138,12 +138,14 @@ class Response extends AbstractMessage implements ResponseInterface
     public function json(array $config = [])
     {
         try {
-            return Utils::jsonDecode(
-                (string) $this->getBody(),
-                isset($config['object']) ? !$config['object'] : true,
-                512,
-                isset($config['big_int_strings']) ? JSON_BIGINT_AS_STRING : 0
-            );
+            return json_decode((string) $this->getBody());
+//            TODO comment this out as the Dynamics API returns OData
+//            return Utils::jsonDecode(
+//                (string) $this->getBody(),
+//                isset($config['object']) ? !$config['object'] : true,
+//                512,
+//                isset($config['big_int_strings']) ? JSON_BIGINT_AS_STRING : 0
+//            );
         } catch (\InvalidArgumentException $e) {
             throw new ParseException(
                 $e->getMessage(),
